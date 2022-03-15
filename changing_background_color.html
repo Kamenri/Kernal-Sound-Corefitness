@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>~ ori yonay ~</title>
+    <link rel='stylesheet' href='style.css'>
+    <script>
+      const ABOUTME = "howdy! my name is ori yonay, and i'm a ";
+      const THINGSIAM = ['programmer', 'musician', 'student at texas a&m'];
+
+      const BGCOLORS = ['lightblue', 'lightgreen', 'aqua', 'aquamarine', 'cornflowerblue',
+                        'darkseagreen', 'deepskyblue', 'greenyellow', 'gold', 'honeydew',
+                        'lavender', 'lightcoral'];
+      const BGCOLOR_LENGTH = BGCOLORS.length;
+
+      function changeBackgroundColor() {
+        pickedcolor = BGCOLORS[Math.floor(Math.random() * BGCOLOR_LENGTH)];
+        document.body.style.backgroundColor = pickedcolor;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // remove the fade:
+        setTimeout(() => {
+          document.body.className = '';
+        }, 500);
+
+        // to avoid showing nothing in the first few seconds of loading:
+        document.querySelector('#intro').innerHTML = ABOUTME + THINGSIAM[0];
+
+        document.querySelector('#main').innerHTML = '~ ori yonay ~';
+        setInterval(() => {
+          let numSeconds = Math.floor(Date.now() / 1000) % 60;
+          document.querySelector('#count').innerHTML = 'changing background color in ' + (60 - numSeconds) + ' seconds';
+          if (numSeconds == 0) changeBackgroundColor();
+        }, 1000);
+
+        let currentItem = 1;
+        setInterval(() => {
+          document.querySelector('#intro').innerHTML = ABOUTME + THINGSIAM[currentItem];
+          currentItem = (currentItem + 1) % THINGSIAM.length; // increment currentItem
+        }, 5000);
+      });
+    </script>
+  </head>
+
+  <body>
+    <script>
+      document.body.className = 'fade';
+    </script>
+    <h1 id='main'>~ loading... ~</h1>
+    <h2 id='intro'></h2>
+    <img src='portrait.png' width='230' height='300'>
+    <br>
+    <br>
+    <a href="about.html" class="button1">about me</a>
+    <a href="portfolio.html" class="button1">portfolio</a>
+    <a href="qualifications.html" class="button1">technical qualifications</a>
+    <a href="service.html" class="button1">service</a>
+    <h4 id='count'>changing background color in -- seconds</h4>
+  </body>
+</html>

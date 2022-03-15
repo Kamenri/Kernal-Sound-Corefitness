@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Kernal</title>
+{% endblock %}
+
+{% block body %}
+<img src="https://github.com/oriyonay/RandomPublicThings/raw/master/kernal_static_assets/Kernal.png" width=200px height=200px>
+<h2>Sign In</h2>
+<form action="{{ url_for('signin') }}" method="post">
+  <input name="username" placeholder="Username">
+  <br>
+  <input type="password" name="password" placeholder="Password">
+  <br>
+  <button id="signUp">Sign In</button>
+</form>
+<form method="POST" action="/signup">
+  <button id="signUp">Don't have an account? Sign Up!</button>
+</form>
+{% endblock %}

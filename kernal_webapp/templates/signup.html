@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Kernal Sign-Up</title>
+{% endblock %}
+
+{% block body %}
+<img src="https://github.com/oriyonay/RandomPublicThings/raw/master/kernal_static_assets/Kernal.png" width=200px height = 200px>
+<h3>Sign Up</h3>
+<form action="{{ url_for('signup_process') }}" method="post">
+<input name="username" placeholder="Username">
+<br>
+<input type="password" name="password" placeholder="Password">
+<br>
+<input type="password" name="password_verify" placeholder="Verify Password">
+<br>
+<input name="fitbit_client_id" placeholder="FitBit Client ID">
+<br>
+<input name ="fitbit_client_secret" placeholder="FitBit Client Secret">
+<br>
+<button id="signUp">Sign Up</button>
+</form>
+<form action="/">
+<button id="signUp">Already have an account? Sign In!</button>
+</form>
+{% endblock %}

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Sign In</title>
+    <style>
+
+    :root{
+        --color1:#f5793a;
+        --color1_hover: #c56230;
+        --color_background:#BACBB9;
+        --color_text_1:#414141;
+    }
+
+      body {
+        left: 0;
+        line-height: 50px;
+        position: relative;
+        text-align: center;
+        top: 50%;
+        width: 100%;
+        background-color: #ffeeb2
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        color: black;
+        font-family: 'Comic Sans MS';
+        margin: 1%;
+      }
+
+    ul {
+      list-style-type: none;
+    }
+
+    label {
+      vertical-align: middle;
+      font-size: 20px;
+    }
+
+    select {
+        border: none;
+        background-color: var(--color1);
+        color: white;
+        border-radius: 100px;
+        box-sizing: border-box;
+        font-size: 25px;
+        padding: 14px 20px;
+        margin: 8px 0;
+        font-family: 'Comic Sans MS';
+        font-weight: bold;
+    }
+
+    .enterData {
+        border: none;
+        background-color: var(--color1);
+        color: white;
+        border-radius: 100px;
+        box-sizing: border-box;
+        font-size: 25px;
+        padding: 14px 20px;
+        margin: 8px 0;
+        font-family: 'Comic Sans MS';
+        font-weight: bold;
+        width: 500px;
+        height: 75px;
+    }
+
+    .enterData::placeholder {
+      color: white;
+      opacity: 0.8;
+      font-weight: bold;
+    }
+    
+    #playlistGenerate {
+        border: none;
+        background-color: var(--color1);
+        color: white;
+        border-radius: 100px;
+        box-sizing: border-box;
+        font-size: 25px;
+        padding: 14px 20px;
+        margin: 8px 0;
+        font-family: 'Comic Sans MS';
+        font-weight: bold;
+    }
+
+    #playlistGenerate:hover {
+        background-color: var(--color1_hover);
+        cursor: pointer;
+    }
+
+    button.enterData:hover {
+        background-color: var(--color1_hover);
+        cursor: pointer;
+    }
+
+    .tab {
+        overflow: hidden;
+        background-color: var(--color_background);
+        border-bottom: 3px solid var(--color_text_1);
+    }
+
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        color: var(--color_text_1);
+        font-size: 24px;
+        font-weight:bold;
+        font-family: 'Comic Sans MS';
+    }
+
+    .tab button:hover {
+        background-color: var(--color1);
+    }
+
+    .tab button:active {
+      background-color: #000;
+      
+    }
+
+    .tabcontent {
+      background-color: var(--color_background);
+      display: none;
+      padding: 6px 12px;
+      border: none;
+      border-top: none;
+    }
+
+    .genreBox {
+		  height: 25px;
+		  width: 50px;
+		  vertical-align: -6px;
+  	}
+    .GenreTable {
+        color: var(--color_text_1);
+        font-family: 'Comic Sans MS';
+        font-weight: bold;
+    }
+    .titleheader{
+        font-family: 'Comic Sans MS';
+        color: var(--color_text_1);
+
+    }
+    #titleHead {
+        font-family: 'Comic Sans MS';
+        color: var(--color_text_1);
+    }
+
+    #fitbitdata {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1.fitbit {
+      text-align: center;
+      padding: 1.5rem 2.5rem;
+      background-color: #63acbe;
+      margin: 0 0 2rem 0;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    p.fitbit {
+      font-family: 'Comic Sans MS';
+    }
+
+    .fitbit {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family: 'Comic Sans MS';
+    }
+
+    p {
+      padding: 0 0.5rem 0.5rem;
+      margin: 0;
+    }
+
+    .cardContainer {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      margin: 1rem;
+      background: white;
+      box-shadow: 2px 4px 25px rgba(0, 0, 0, .1);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all .2s linear;
+    }
+
+    .card:hover {
+      box-shadow: 2px 8px 45px rgba(0, 0, 0, .15);
+      transform: translate3D(0, -2px, 0);
+    }
+
+    @media screen and (min-width: 600px) {
+      .card {
+        flex: 1 1 calc(50% - 2rem);
+      }
+    }
+
+    @media screen and (min-width: 900px) {
+      .card {
+        flex: 1 1 calc(33% - 2rem);
+      }
+    }
+
+    label {
+        font-family: 'Comic Sans MS';
+    }
+
+    #protanopiaCheck, #deuteranopiaCheck {
+        height: 25px;
+        width: 25px;
+    }
+    </style>
+    
+<title>Kernal</title>
+
+  </head>
+
+  <body>
+    
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-xl-4 text-xl-left">
+              <img src="Kernal.png" class="titleheader" width="100" height="100"/>
+          </div>
+
+          <div class="col-xl-4">
+              <h1 id="titleHead" class="align-bottom">SoundCore Fitness</h1>
+          </div>
+
+          <div class="col-xl-4 text-xl-right">
+              <h4>Colorblind options:</h4>
+              <label for="protanopiaCheck">Protanopia Color Palette:</label> 
+              <input type="checkbox" id="protanopiaCheck" onclick="myFunction()" class="align-baseline">
+              <br>
+              <label for="deuteranopiaCheck">Deuteranopia Color Palette:</label> 
+              <input type="checkbox" id="deuteranopiaCheck" onclick="myFunction()" class="align-baseline">
+          </div>
+      </div>
+  </div>
+<h3>Sign In</h3>
+<form action="/signin" method="post">
+  <input name="username" placeholder="Username" class="enterData">
+  <br>
+  <input type="password" name="password" placeholder="Password" class="enterData">
+  <br>
+  <button id="signUp" class="enterData">Sign In</button>
+</form>
+<form method="POST" action="SignUp.html">
+  <button id="signUp" class="enterData">Don't have an account? Sign Up!</button>
+</form>
+
+<script>
+  //   --color1:#f5793a;
+  // --color1_hover: #c56230;
+  // --color_background:#BACBB9;
+  // --color_text_1:#414141;
+  function myFunction() {
+    var protanopiaCheckBox = document.getElementById("protanopiaCheck");
+    var deuteranopiaCheckBox = document.getElementById("deuteranopiaCheck");
+    if (protanopiaCheckBox.checked == true && deuteranopiaCheckBox.checked == false){
+      document.documentElement.style.setProperty('--color1', '#AE9C45');
+      document.documentElement.style.setProperty('--color1_hover', '#6073B1');
+      document.documentElement.style.setProperty('--color_background', '#A7B8F8');
+      // document.documentElement.style.setProperty('--color_text_1', '#AE9C45');
+    } else if(protanopiaCheckBox.checked == false && deuteranopiaCheckBox.checked == true) {
+      document.documentElement.style.setProperty('--color1', '#C59434');
+      document.documentElement.style.setProperty('--color1_hover', '#6F7498');
+      document.documentElement.style.setProperty('--color_background', '#A3B7F9');
+    } else {
+      document.documentElement.style.setProperty('--color1', '#f5793a');
+      document.documentElement.style.setProperty('--color1_hover', '#c56230');
+      document.documentElement.style.setProperty('--color_background', '#BACBB9');
+    }
+  }
+  </script>
+  
+  </body>
+</html>

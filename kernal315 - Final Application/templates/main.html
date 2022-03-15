@@ -1,0 +1,1005 @@
+{% extends "layout.html" %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFXPHaaYSGFhhDKTxfBHXKnSXsBn3EaMU&callback=initMap&libraries=&v=weekly" defer></script>
+    <title>Soundcore Fitness</title>
+    <style>
+
+    :root{
+        --color1:#f5793a;
+        --color1_hover: #c56230;
+        --color_background:#BACBB9;
+        --color_text_1:#414141;
+        --color_cardbg:#63acbe;
+    }
+    #map {
+    height: 100%;
+    background-color: var(--color_background);
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html {
+        height:50%;
+        margin: 0;
+        padding: 0;    
+    }
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #floating-panel{
+        visibility: hidden;
+    }
+
+
+    #right-panel {
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+        background-color: var(--color_background);
+    }
+
+    #right-panel select,
+    #right-panel input {
+        font-size: 15px;
+    }
+
+    #right-panel select {
+        width: 100%;
+    }
+
+    #right-panel i {
+        font-size: 12px;
+    }
+
+    #right-panel {
+        height: 100%;
+        float: right;
+        width: 390px;
+        overflow: auto;
+    }
+
+    #map {
+        margin-right: 400px;
+    }
+
+
+    @media print {
+    #map {
+        height: 500px;
+        margin: 0;
+    }
+
+    #right-panel {
+        float: none;
+        width: auto;
+    }
+    }
+
+      body {
+        left: 0;
+        line-height: 50px;
+        position: relative;
+        text-align: center;
+        top: 50%;
+        width: 100%;
+        background-color: #ffeeb2
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        color: black;
+        font-family: 'Comic Sans MS';
+        margin: 1%;
+      }
+
+    ul {
+      list-style-type: none;
+    }
+
+    label {
+      vertical-align: middle;
+      font-size: 20px;
+    }
+
+    select {
+        border: none;
+        background-color: var(--color1);
+        color: white;
+        border-radius: 100px;
+        box-sizing: border-box;
+        font-size: 25px;
+        padding: 14px 20px;
+        margin: 8px 0;
+        font-family: 'Comic Sans MS';
+        font-weight: bold;
+    }
+
+    .enterData {
+        border: none;
+        background-color: var(--color1);
+        color: white;
+        border-radius: 100px;
+        box-sizing: border-box;
+        font-size: 25px;
+        padding: 14px 20px;
+        margin: 8px 0;
+        font-family: 'Comic Sans MS';
+        font-weight: bold;
+        width: 415px;
+        height: 75px;
+    }
+
+    .enterData::placeholder {
+      color: white;
+      opacity: 0.8;
+      font-weight: bold;
+    }
+
+    #playlistGenerate {
+        border: none;
+        background-color: var(--color1);
+        color: white;
+        border-radius: 100px;
+        box-sizing: border-box;
+        font-size: 25px;
+        padding: 14px 20px;
+        margin: 8px 0;
+        font-family: 'Comic Sans MS';
+        font-weight: bold;
+    }
+
+    #playlistGenerate:hover {
+        background-color: var(--color1_hover);
+        cursor: pointer;
+    }
+
+    button.enterData:hover {
+        background-color: var(--color1_hover);
+        cursor: pointer;
+    }
+
+    .tab {
+        overflow: hidden;
+        background-color: var(--color_background);
+        border-bottom: 3px solid var(--color_text_1);
+    }
+
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        color: var(--color_text_1);
+        font-size: 24px;
+        font-weight:bold;
+        font-family: 'Comic Sans MS';
+    }
+
+    .tab button:hover {
+        background-color: var(--color1);
+    }
+
+    .tab button:active {
+      background-color: #000;
+
+    }
+
+    .tabcontent {
+      background-color: var(--color_background);
+      display: none;
+      padding: 6px 12px;
+      border: none;
+      border-top: none;
+    }
+
+    .genreBox {
+		  height: 25px;
+		  width: 50px;
+		  vertical-align: -6px;
+  	}
+    .GenreTable {
+        color: var(--color_text_1);
+        font-family: 'Comic Sans MS';
+        font-weight: bold;
+    }
+
+    #titleHead {
+        font-family: 'Comic Sans MS';
+        color: var(--color_text_1);
+    }
+
+    #fitbitdata {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1.fitbit {
+      text-align: center;
+      padding: 1.5rem 2.5rem;
+      background-color: var(--color_cardbg);
+      margin: 0 0 2rem 0;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    p.fitbit {
+      font-family: 'Comic Sans MS';
+    }
+
+    .fitbit {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family: 'Comic Sans MS';
+    }
+
+    p {
+      padding: 0 0.5rem 0.5rem;
+      margin: 0;
+    }
+
+    .cardContainer {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      margin: 1rem;
+      background: white;
+      box-shadow: 2px 4px 25px rgba(0, 0, 0, .1);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all .2s linear;
+    }
+
+    .card:hover {
+      box-shadow: 2px 8px 45px rgba(0, 0, 0, .15);
+      transform: translate3D(0, -2px, 0);
+    }
+
+    @media screen and (min-width: 600px) {
+      .card {
+        flex: 1 1 calc(50% - 2rem);
+      }
+    }
+
+    @media screen and (min-width: 900px) {
+      .card {
+        flex: 1 1 calc(33% - 2rem);
+      }
+    }
+
+    label {
+        font-family: 'Comic Sans MS';
+    }
+
+    #protanopiaCheck, #deuteranopiaCheck {
+        height: 25px;
+        width: 25px;
+    }
+
+    #tabon{
+        visibility: hidden;
+    }
+
+    </style>
+
+    <title>Kernal</title>
+
+  {% endblock %}
+
+  {% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4 text-xl-left">
+                <img src="https://github.com/oriyonay/RandomPublicThings/raw/master/kernal_static_assets/Kernal.png" class="titleheader" width="100" height="100"/>
+            </div>
+
+            <div class="col-xl-4">
+                <h1 id="titleHead" class="align-bottom">SoundCore Fitness</h1>
+            </div>
+
+            <div class="col-xl-4 text-xl-right">
+                <h4>Colorblind options:</h4>
+                <form action="/make_playlist" method="post">
+                    <label for="protanopiaCheck">Protanopia Color Palette:</label>
+                    <input type="checkbox" id="protanopiaCheck" name = "deuteranopia" onclick="myFunction()" class="align-baseline">
+                    <br>
+                    <label for="deuteranopiaCheck">Deuteranopia Color Palette:</label>
+                    <input type="checkbox" id="deuteranopiaCheck" name = "protanopia" onclick="yourFunction()" class="align-baseline">
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+
+      <div class="tab">
+          <button class="tablinks" onclick="openTab(event, 'FitBitInfo')" id="defaultOpen">FitBit Information</button>
+          <button class="tablinks" onclick="openTab(event, 'Workout')" id="defaultOpen2">Playlist Generator</button>
+          <button class="tablinks" onclick="openTab(event, 'Running')" id="defaultOpen3">Run Planner</button>
+      </div>
+
+
+      <div id="FitBitInfo" class="tabcontent">
+        <div id="fitbitdata"></div>
+      </div>
+
+      <div id="Workout" class="tabcontent">
+          <form action="/make_playlist" method="post">
+              <table style="width:100%">
+                  <tr>
+                      <td>
+                          <h2>Use the options below to create a playlist for your workout!</h2>
+                      </td>
+                  </tr>
+              </table>
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col">
+                          <select name="workout_type" id="workout_type" class="enterData">
+                              <option id="spotifyOption" disabled selected>Choose workout type:</option>
+                              <option id="spotifyOption" value="Running">Cardio: Running</option>
+                              <option id="spotifyOption" value="Cycling"> Cardio: Cycling</option>
+                              <option id="spotifyOption" value="Rowing"> Cardio: Rowing</option>
+                              <option id="spotifyOption" value="Bench">Weightlifting: Bench Workout</option>
+                              <option id="spotifyOption" value="Dumbbells">Weightlifting: Dumbbells</option>
+                              <option id="spotifyOption" value="ArmWokout"> Upper Body: Arm Workout</option>
+                              <option id="spotifyOption" value="ChestWorkout"> Upper Body: Chest Workout</option>
+                              <option id="spotifyOption" value="LegWorkout"> Lower Body: Leg Workout</option>
+                              <option id="spotifyOption" value="GluteWorkout"> Lower Body: Glute Workout</option>
+                          </select>
+                      </div>
+
+                      <div class="col">
+                          <select name="workout_intensity" id="workout_intensity" class="enterData">
+                              <option disabled selected>Choose workout intensity:</option>
+                              <option value="Easy">Easy</option>
+                              <option value="Medium">Medium</option>
+                              <option value="Hard">Hard</option>
+                          </select>
+                      </div>
+
+                      <div class="col">
+                          <select name="workout_length" id="workout_length" class="enterData">
+                              <option disabled selected>Choose workout length:</option>
+                              <option value="15">15 Minutes</option>
+                              <option value="30">30 Minutes</option>
+                              <option value="45">45 Minutes</option>
+                              <option value="60">1 Hour</option>
+                              <option value="90">1.5 Hours</option>
+                              <option value="120">2 Hours</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+
+
+              <h1 class="titleheader">Select your desired genres:</h1>
+              <div class="GenreTable">
+                  <div class="row">
+                      <div class="col-xl-3 text-sm-left">
+                          <input type="checkbox" id="genre0" name="Top Lists" value="Top Lists" class="genreBox">
+                          <label for="genre0">Top Lists</label><br>
+
+                          <input type="checkbox" id="genre1" name="Hip Hop" value="Hip Hop" class="genreBox">
+                          <label for="genre1">Hip Hop</label><br>
+
+                          <input type="checkbox" id="genre2" name="Pop" value="Pop" class="genreBox">
+                          <label for="genre2">Pop</label><br>
+
+                          <input type="checkbox" id="genre3" name="Country" value="Country" class="genreBox">
+                          <label for="genre3">Country</label><br>
+
+                          <input type="checkbox" id="genre4" name="Workout" value="Workout" class="genreBox">
+                          <label for="genre4">Workout</label><br>
+
+                          <input type="checkbox" id="genre5" name="Rock" value="Rock" class="genreBox">
+                          <label for="genre5">Rock</label><br>
+
+                          <input type="checkbox" id="genre6" name="In the car" value="In the car" class="genreBox">
+                          <label for="genre6">In the car</label><br>
+
+                          <input type="checkbox" id="genre7" name="Latin" value="Latin" class="genreBox">
+                          <label for="genre7">Latin</label><br>
+
+                          <input type="checkbox" id="genre8" name="Mood" value="Mood" class="genreBox">
+                          <label for="genre8">Mood</label><br>
+
+                          <input type="checkbox" id="genre9" name="R&B" value="R&B" class="genreBox">
+                          <label for="genre9">R&B</label><br>
+                      </div>
+
+                      <div class="col-xl-3 text-sm-left">
+                          <input type="checkbox" id="genre10" name="Black History Is Now" value="Black History Is Now" class="genreBox">
+                          <label for="genre10">Black History Is Now</label><br>
+
+                          <input type="checkbox" id="genre11" name="Gaming" value="Gaming" class="genreBox">
+                          <label for="genre11">Gaming</label><br>
+
+                          <input type="checkbox" id="genre12" name="Focus" value="Focus" class="genreBox">
+                          <label for="genre12">Focus</label><br>
+
+                          <input type="checkbox" id="genre13" name="Dance/Electronic" value="Dance/Electronic" class="genreBox">
+                          <label for="genre13">Dance/Electronic</label><br>
+
+                          <input type="checkbox" id="genre14" name="Chill" value="Chill" class="genreBox">
+                          <label for="genre14">Chill</label><br>
+
+                          <input type="checkbox" id="genre15" name="Indie" value="Indie" class="genreBox">
+                          <label for="genre15">Indie</label><br>
+
+                          <input type="checkbox" id="genre16" name="Christian" value="Christian" class="genreBox">
+                          <label for="genre16">Christian</label><br>
+
+                          <input type="checkbox" id="genre17" name="Student" value="Student" class="genreBox">
+                          <label for="genre17">Student</label><br>
+
+                          <input type="checkbox" id="genre18" name="Alternative" value="Alternative" class="genreBox">
+                          <label for="genre18">Alternative</label><br>
+
+                          <input type="checkbox" id="genre19" name="Wellness" value="Wellness" class="genreBox">
+                          <label for="genre19">Wellness</label><br>
+                      </div>
+
+                      <div class="col-xl-3 text-sm-left">
+                          <input type="checkbox" id="genre20" name="Pride" value="Pride" class="genreBox">
+                          <label for="genre20">Pride</label><br>
+
+                          <input type="checkbox" id="genre21" name="Party" value="Party" class="genreBox">
+                          <label for="genre21">Party</label><br>
+
+                          <input type="checkbox" id="genre22" name="Classical" value="Classical" class="genreBox">
+                          <label for="genre22">Classical</label><br>
+
+                          <input type="checkbox" id="genre23" name="Jazz" value="Jazz" class="genreBox">
+                          <label for="genre23">Jazz</label><br>
+
+                          <input type="checkbox" id="genre24" name="Soul" value="Soul" class="genreBox">
+                          <label for="genre24">Soul</label><br>
+
+                          <input type="checkbox" id="genre25" name="Spotify Singles" value="Spotify Singles" class="genreBox">
+                          <label for="genre25">Spotify Singles</label><br>
+
+                          <input type="checkbox" id="genre26" name="Sports" value="Sports" class="genreBox">
+                          <label for="genre26">Sports</label><br>
+
+                          <input type="checkbox" id="genre27" name="K-Pop" value="K-Pop" class="genreBox">
+                          <label for="genre27">K-Pop</label><br>
+
+                          <input type="checkbox" id="genre28" name="Punk" value="Punk" class="genreBox">
+                          <label for="genre28">Punk</label><br>
+
+                          <input type="checkbox" id="genre29" name="Regional Mexican" value="Regional Mexican" class="genreBox">
+                          <label for="genre29">Regional Mexican</label><br>
+                      </div>
+
+                      <div class="col-xl-3 text-sm-left">
+                          <input type="checkbox" id="genre30" name="Pop culture" value="Pop culture" class="genreBox">
+                          <label for="genre30">Pop culture</label><br>
+
+                          <input type="checkbox" id="genre31" name="Arab" value="Arab" class="genreBox">
+                          <label for="genre31">Arab</label><br>
+
+                          <input type="checkbox" id="genre32" name="Desi" value="Desi" class="genreBox">
+                          <label for="genre32">Desi</label><br>
+
+                          <input type="checkbox" id="genre33" name="Anime" value="Anime" class="genreBox">
+                          <label for="genre33">Anime</label><br>
+
+                          <input type="checkbox" id="genre34" name="Tastemakers" value="Tastemakers" class="genreBox">
+                          <label for="genre34">Tastemakers</label><br>
+
+                          <input type="checkbox" id="genre35" name="Afro" value="Afro" class="genreBox">
+                          <label for="genre35">Afro</label><br>
+
+                          <input type="checkbox" id="genre36" name="Comedy" value="Comedy" class="genreBox">
+                          <label for="genre36">Comedy</label><br>
+
+                          <input type="checkbox" id="genre37" name="Metal" value="Metal" class="genreBox">
+                          <label for="genre37">Metal</label><br>
+
+                          <input type="checkbox" id="genre38" name="Caribbean" value="Caribbean" class="genreBox">
+                          <label for="genre38">Caribbean</label><br>
+
+                          <input type="checkbox" id="genre39" name="Funk" value="Funk" class="genreBox">
+                          <label for="genre39">Funk</label><br>
+                      </div>
+                  </div>
+                  <br />
+              <input type="checkbox" id="explicit_check1" name="not_explict" value="not_explict" class="genreBox">
+                <label for = "explicit_check1">Not Explicit</label><br>
+              <button id="playlistGenerate" class="enterData">Generate!</button>
+              </div>
+          </form>
+          {% if spotifyURL %}
+          <iframe src='{{spotifyURL}}' style="border:1px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px" height="400px" width="600px" allowfullscreen></iframe>
+          <div id="wgerdata"></div>
+          {% endif %}
+      </div>
+
+      <div id="Running" class="tabcontent">
+          <form action="/make_playlist" method="post">
+              <table style="width:100%">
+                  <tr>
+                      <td>
+                          <h2>Use the options below to plan your run and create a playlist!</h2>
+                      </td>
+                  </tr>
+              </table>
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col">
+                          <select name="workout_intensity" id="workout_intensity" class="enterData">
+                              <option disabled selected>Choose running intensity:</option>
+                              <option value="Easy">Easy</option>
+                              <option value="Medium">Medium</option>
+                              <option value="Hard">Hard</option>
+                          </select>
+                      </div>
+
+                      <div class="col">
+                          <input id="RunTime" name="RunTime" placeholder="Enter run distance: (mi)" class="enterData">
+                      </div>
+                  </div>
+              </div>
+
+
+              <h1 class="titleheader">Select your desired genres:</h1>
+              <div class="GenreTable">
+                  <div class="row">
+                      <div class="col-xl-3 text-sm-left">
+                          <input type="checkbox" id="2genre0" name="Top Lists" value="Top Lists" class="genreBox">
+                          <label for="2genre0">Top Lists</label><br>
+
+                          <input type="checkbox" id="2genre1" name="Hip Hop" value="Hip Hop" class="genreBox">
+                          <label for="2genre1">Hip Hop</label><br>
+
+                          <input type="checkbox" id="2genre2" name="Pop" value="Pop" class="genreBox">
+                          <label for="2genre2">Pop</label><br>
+
+                          <input type="checkbox" id="2genre3" name="Country" value="Country" class="genreBox">
+                          <label for="2genre3">Country</label><br>
+
+                          <input type="checkbox" id="2genre4" name="Workout" value="Workout" class="genreBox">
+                          <label for="2genre4">Workout</label><br>
+
+                          <input type="checkbox" id="2genre5" name="Rock" value="Rock" class="genreBox">
+                          <label for="2genre5">Rock</label><br>
+
+                          <input type="checkbox" id="2genre6" name="In the car" value="In the car" class="genreBox">
+                          <label for="2genre6">In the car</label><br>
+
+                          <input type="checkbox" id="2genre7" name="Latin" value="Latin" class="genreBox">
+                          <label for="2genre7">Latin</label><br>
+
+                          <input type="checkbox" id="2genre8" name="Mood" value="Mood" class="genreBox">
+                          <label for="2genre8">Mood</label><br>
+
+                          <input type="checkbox" id="2genre9" name="R&B" value="R&B" class="genreBox">
+                          <label for="2genre9">R&B</label><br>
+                      </div>
+
+                      <div class="col-xl-3 text-sm-left">
+                          <input type="checkbox" id="2genre10" name="Black History Is Now" value="Black History Is Now" class="genreBox">
+                          <label for="2genre10">Black History Is Now</label><br>
+
+                          <input type="checkbox" id="2genre11" name="Gaming" value="Gaming" class="genreBox">
+                          <label for="2genre11">Gaming</label><br>
+
+                          <input type="checkbox" id="2genre12" name="Focus" value="Focus" class="genreBox">
+                          <label for="2genre12">Focus</label><br>
+
+                          <input type="checkbox" id="2genre13" name="Dance/Electronic" value="Dance/Electronic" class="genreBox">
+                          <label for="2genre13">Dance/Electronic</label><br>
+
+                          <input type="checkbox" id="2genre14" name="Chill" value="Chill" class="genreBox">
+                          <label for="2genre14">Chill</label><br>
+
+                          <input type="checkbox" id="2genre15" name="Indie" value="Indie" class="genreBox">
+                          <label for="2genre15">Indie</label><br>
+
+                          <input type="checkbox" id="2genre16" name="Christian" value="Christian" class="genreBox">
+                          <label for="2genre16">Christian</label><br>
+
+                          <input type="checkbox" id="2genre17" name="Student" value="Student" class="genreBox">
+                          <label for="2genre17">Student</label><br>
+
+                          <input type="checkbox" id="2genre18" name="Alternative" value="Alternative" class="genreBox">
+                          <label for="2genre18">Alternative</label><br>
+
+                          <input type="checkbox" id="2genre19" name="Wellness" value="Wellness" class="genreBox">
+                          <label for="2genre19">Wellness</label><br>
+                      </div>
+
+                      <div class="col-xl-3 text-sm-left">
+                          <input type="checkbox" id="2genre20" name="Pride" value="Pride" class="genreBox">
+                          <label for="2genre20">Pride</label><br>
+
+                          <input type="checkbox" id="2genre21" name="Party" value="Party" class="genreBox">
+                          <label for="2genre21">Party</label><br>
+
+                          <input type="checkbox" id="2genre22" name="Classical" value="Classical" class="genreBox">
+                          <label for="2genre22">Classical</label><br>
+
+                          <input type="checkbox" id="2genre23" name="Jazz" value="Jazz" class="genreBox">
+                          <label for="2genre23">Jazz</label><br>
+
+                          <input type="checkbox" id="2genre24" name="Soul" value="Soul" class="genreBox">
+                          <label for="2genre24">Soul</label><br>
+
+                          <input type="checkbox" id="2genre25" name="Spotify Singles" value="Spotify Singles" class="genreBox">
+                          <label for="2genre25">Spotify Singles</label><br>
+
+                          <input type="checkbox" id="2genre26" name="Sports" value="Sports" class="genreBox">
+                          <label for="2genre26">Sports</label><br>
+
+                          <input type="checkbox" id="2genre27" name="K-Pop" value="K-Pop" class="genreBox">
+                          <label for="2genre27">K-Pop</label><br>
+
+                          <input type="checkbox" id="2genre28" name="Punk" value="Punk" class="genreBox">
+                          <label for="2genre28">Punk</label><br>
+
+                          <input type="checkbox" id="2genre29" name="Regional Mexican" value="Regional Mexican" class="genreBox">
+                          <label for="2genre29">Regional Mexican</label><br>
+                      </div>
+
+                      <div class="col-xl-3 text-sm-left">
+                          <input type="checkbox" id="2genre30" name="Pop culture" value="Pop culture" class="genreBox">
+                          <label for="2genre30">Pop culture</label><br>
+
+                          <input type="checkbox" id="2genre31" name="Arab" value="Arab" class="genreBox">
+                          <label for="2genre31">Arab</label><br>
+
+                          <input type="checkbox" id="2genre32" name="Desi" value="Desi" class="genreBox">
+                          <label for="2genre32">Desi</label><br>
+
+                          <input type="checkbox" id="2genre33" name="Anime" value="Anime" class="genreBox">
+                          <label for="2genre33">Anime</label><br>
+
+                          <input type="checkbox" id="2genre34" name="Tastemakers" value="Tastemakers" class="genreBox">
+                          <label for="2genre34">Tastemakers</label><br>
+
+                          <input type="checkbox" id="2genre35" name="Afro" value="Afro" class="genreBox">
+                          <label for="2genre35">Afro</label><br>
+
+                          <input type="checkbox" id="2genre36" name="Comedy" value="Comedy" class="genreBox">
+                          <label for="2genre36">Comedy</label><br>
+
+                          <input type="checkbox" id="2genre37" name="Metal" value="Metal" class="genreBox">
+                          <label for="2genre37">Metal</label><br>
+
+                          <input type="checkbox" id="2genre38" name="Caribbean" value="Caribbean" class="genreBox">
+                          <label for="2genre38">Caribbean</label><br>
+
+                          <input type="checkbox" id="2genre39" name="Funk" value="Funk" class="genreBox">
+                          <label for="2genre39">Funk</label><br>
+                      </div>
+                  </div>
+                  </div>
+                  <br />
+                  <input type="checkbox" id="explicit_check2" name="not_explict" value="not_explict" class="genreBox">
+                  <label for = "explicit_check2">Not Explicit</label><br>
+                  <button id="playlistGenerate" class="enterData">Generate!</button>
+          </form>
+          {% if spotifyURL %}
+          <iframe src='{{spotifyURL}}' style="border:1px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px" height="400px" width="600px" allowfullscreen></iframe>
+          <div id="wgerdata2"></div>
+          {% endif %}
+
+          <div id="googleMaps">
+              <h3>Google Maps</h3>
+              <br>
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col">
+                          <input id="Startdestination" placeholder="Enter starting location:" class="enterData">
+                      </div>
+
+                      <div class="col">
+                          <input id="Enddestination" placeholder="Enter ending location:" class="enterData">
+                      </div>
+
+                      <div class="col">
+                          <button id="themapbutton" class="enterData">Generate route!</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+    </div>
+    <div id="floating-panel">
+      <b></b>
+      <select id="start">
+      <option value=""></option>
+      </select>
+      <b></b>
+      <select id="end">
+      <option value=""></option>
+      </select>
+  </div>
+  <div id="right-panel"></div>
+  <div id="map" ></div>
+  <p id = "tabon"></p>
+
+<script>
+    document.getElementById('{{tabon}}').click();
+    function openTab(evt, toOpen) {
+    var curr_tab = document.getElementById("tabon");
+    curr_tab.value=toOpen;
+    var mapo = document.getElementById("map");
+    var maposfriend = document.getElementById("right-panel");
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace("active", "");
+    }
+    document.getElementById(toOpen).style.display = "block";
+    evt.currentTarget.className += "active";
+    
+    if (toOpen == "Running"){
+        mapo.style.display = "block";
+        maposfriend.style.display = "block";
+    }
+    else{
+    mapo.style.display = "none";
+    maposfriend.style.display = "none";
+    }
+    for(i = 0; i < 40; i++)
+    {
+        var toClear = "genre" + i.toString();
+        document.getElementById(toClear).checked = false;
+    }
+    for(i = 0; i < 40; i++)
+    {
+        var toClear = "2genre" + i.toString();
+        document.getElementById(toClear).checked = false;
+    }
+    document.getElementById("explicit_check1").checked = false;
+    document.getElementById("explicit_check2").checked = false;
+    }
+    
+
+        const app = document.getElementById('fitbitdata');
+
+        const cardContainer = document.createElement('div');
+        cardContainer.setAttribute('class', 'cardContainer');
+
+        app.appendChild(cardContainer);
+
+
+        // Begin accessing JSON data here
+        // const jso = '{"name":"discription","name2":"discription \\r\\n n2","name1":"discription"}';
+        var list_dict = JSON.parse('{{ fitbit_data | tojson | safe}}');
+
+        // const jso = '{"0": {"name": "Workout", "Date": "2020-11-13", "Time": "19:29", "Duration": "0.45 minutes", "Calories Spent": "0 cal"}, "1": {"name": "Treadmill", "Date": "2020-11-13", "Time": "19:30", "Duration": "28.78 minutes", "Calories Spent": "192 cal", "Distance": "1.08621 km"}, "2": {"name": "Run", "Date": "2020-11-13", "Time": "19:59", "Duration": "0.93 minutes", "Calories Spent": "6 cal", "Distance": "0.04516 km"}, "3": {"name": "Interval Workout", "Date": "2020-11-13", "Time": "20:03", "Duration": "5.45 minutes", "Calories Spent": "53 cal"}}';
+        // var list_dict = JSON.parse(jso);
+        console.log(list_dict);
+
+        for (var key in list_dict){
+            if (list_dict.hasOwnProperty(key)) {
+                // console.log(key, data[key]);
+                var data = list_dict[key];
+
+                const card = document.createElement('div');
+                card.setAttribute('class', 'card');
+
+                const h1 = document.createElement('h1');
+                h1.setAttribute('class', 'fitbit');
+                h1.textContent = data['name'];
+
+                cardContainer.appendChild(card);
+                card.appendChild(h1);
+
+                for(var attr in data){
+                    if(attr != 'name'){
+                        const p = document.createElement('p');
+                        p.setAttribute('class', 'fitbit');
+                        data[attr] = data[attr].substring(0, 300);
+                        p.textContent = attr+" : "+ data[attr];
+                        card.appendChild(p);
+                    }
+                }
+            }
+        }
+</script>
+<script>
+    const app2 = document.getElementById('wgerdata');
+
+    const container2 = document.createElement('div');
+    container2.setAttribute('class', 'cardContainer');
+
+    app2.appendChild(container2);
+
+
+    // Begin accessing JSON data here
+    // const jso = '{"name":"discription","name2":"discription \\r\\n n2","name1":"discription"}';
+    // const jso = '{"0": {"name": "Workout", "Date": "2020-11-13", "Time": "19:29", "Duration": "0.45 minutes", "Calories Spent": "0 cal"}, "1": {"name": "Treadmill", "Date": "2020-11-13", "Time": "19:30", "Duration": "28.78 minutes", "Calories Spent": "192 cal", "Distance": "1.08621 km"}, "2": {"name": "Run", "Date": "2020-11-13", "Time": "19:59", "Duration": "0.93 minutes", "Calories Spent": "6 cal", "Distance": "0.04516 km"}, "3": {"name": "Interval Workout", "Date": "2020-11-13", "Time": "20:03", "Duration": "5.45 minutes", "Calories Spent": "53 cal"}}';
+    console.log("hi")
+    var list_dict2 = JSON.parse('{{ wger_data | tojson }}');
+    console.log(list_dict2);
+    console.log("hi2")
+
+    for (var key in list_dict2){
+        if (list_dict2.hasOwnProperty(key)) {
+            // console.log(key, data[key]);
+            var data = list_dict2[key];
+            
+            const card = document.createElement('div');
+            card.setAttribute('class', 'card');
+            
+            const h1 = document.createElement('h1');
+            h1.setAttribute('class', 'fitbit');
+            h1.textContent = data['name'];
+
+            container2.appendChild(card);
+            card.appendChild(h1);
+
+            for(var attr in data){
+                if(attr != 'name'){
+                    const p = document.createElement('p');
+                    data[attr] = data[attr];
+                    p.textContent = attr+" : "+ data[attr];
+                    card.appendChild(p);
+                }
+            }
+        }
+    }
+</script>
+<script>
+    const app3 = document.getElementById('wgerdata2');
+
+    const container3 = document.createElement('div');
+    container3.setAttribute('class', 'cardContainer');
+
+    app3.appendChild(container3);
+
+
+    // Begin accessing JSON data here
+    // const jso = '{"name":"discription","name2":"discription \\r\\n n2","name1":"discription"}';
+    // const jso = '{"0": {"name": "Workout", "Date": "2020-11-13", "Time": "19:29", "Duration": "0.45 minutes", "Calories Spent": "0 cal"}, "1": {"name": "Treadmill", "Date": "2020-11-13", "Time": "19:30", "Duration": "28.78 minutes", "Calories Spent": "192 cal", "Distance": "1.08621 km"}, "2": {"name": "Run", "Date": "2020-11-13", "Time": "19:59", "Duration": "0.93 minutes", "Calories Spent": "6 cal", "Distance": "0.04516 km"}, "3": {"name": "Interval Workout", "Date": "2020-11-13", "Time": "20:03", "Duration": "5.45 minutes", "Calories Spent": "53 cal"}}';
+    console.log("hi")
+    var list_dict2 = JSON.parse('{{ wger_data | tojson }}');
+    console.log(list_dict2);
+    console.log("hi2")
+
+    for (var key in list_dict2){
+        if (list_dict2.hasOwnProperty(key)) {
+            // console.log(key, data[key]);
+            var data = list_dict2[key];
+            
+            const card = document.createElement('div');
+            card.setAttribute('class', 'card');
+            
+            const h1 = document.createElement('h1');
+            h1.setAttribute('class', 'fitbit');
+            h1.textContent = data['name'];
+
+            container3.appendChild(card);
+            card.appendChild(h1);
+
+            for(var attr in data){
+                if(attr != 'name'){
+                    const p = document.createElement('p');
+                    data[attr] = data[attr];
+                    p.textContent = attr+" : "+ data[attr];
+                    card.appendChild(p);
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function initMap() {
+        const directionsService = new google.maps.DirectionsService();
+        const directionsRenderer = new google.maps.DirectionsRenderer();
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 14,
+            center: { lat: 30.618756, lng: -96.336477 },
+        });
+        directionsRenderer.setMap(map);
+
+        directionsRenderer.setPanel(document.getElementById("right-panel"));
+        const control = document.getElementById("floating-panel");
+        control.style.display = "block";
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
+        const onChangeHandler = function () {
+            calculateAndDisplayRoute(directionsService, directionsRenderer);
+        };
+        document
+            .getElementById("start")
+            .addEventListener("change", onChangeHandler);
+        document
+            .getElementById("end")
+            .addEventListener("change", onChangeHandler);
+        document
+            .getElementById("themapbutton")
+            .addEventListener("click", onChangeHandler);
+    }
+
+    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        directionsService.route(
+            {
+                origin: {
+                    query: document.getElementById("Startdestination").value,
+                },
+                destination: {
+                    query: document.getElementById("Enddestination").value,
+                },
+                travelMode: google.maps.TravelMode.WALKING,
+            },
+            (response, status) => {
+                if (status === "OK") {
+                    directionsRenderer.setDirections(response);
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        );
+        
+    }
+</script>
+<script>
+    //   --color1:#f5793a;
+    // --color1_hover: #c56230;
+    // --color_background:#BACBB9;
+    // --color_text_1:#414141;
+    function myFunction() {
+      var protanopiaCheckBox = document.getElementById("protanopiaCheck");
+      var deuteranopiaCheckBox = document.getElementById("deuteranopiaCheck");
+      if (protanopiaCheckBox.checked == true){
+        document.documentElement.style.setProperty('--color1', '#AE9C45');
+        document.documentElement.style.setProperty('--color1_hover', '#6073B1');
+        document.documentElement.style.setProperty('--color_background', '#A7B8F8');
+        document.documentElement.style.setProperty('--color_cardbg', '#9C9EB5');
+        deuteranopiaCheckBox.checked = false;
+      } else {
+        document.documentElement.style.setProperty('--color1', '#f5793a');
+        document.documentElement.style.setProperty('--color1_hover', '#c56230');
+        document.documentElement.style.setProperty('--color_background', '#BACBB9');
+        document.documentElement.style.setProperty('--color_cardbg', '#63ACBE');
+      }
+    }
+
+    function yourFunction() {
+        var protanopiaCheckBox = document.getElementById("protanopiaCheck");
+        var deuteranopiaCheckBox = document.getElementById("deuteranopiaCheck");
+        if(deuteranopiaCheckBox.checked == true) {
+            document.documentElement.style.setProperty('--color1', '#C59434');
+            document.documentElement.style.setProperty('--color1_hover', '#6F7498');
+            document.documentElement.style.setProperty('--color_background', '#A3B7F9');
+            document.documentElement.style.setProperty('--color_cardbg', '#9E9CC2');
+            protanopiaCheckBox.checked = false;
+        } else {
+            document.documentElement.style.setProperty('--color1', '#f5793a');
+            document.documentElement.style.setProperty('--color1_hover', '#c56230');
+            document.documentElement.style.setProperty('--color_background', '#BACBB9');
+            document.documentElement.style.setProperty('--color_cardbg', '#63ACBE');
+        }
+    }
+    var colorblind = '{{colorblind}}'
+    if("deuteranopia" == colorblind) {
+        protanopiaCheckBox.checked = true
+        myFunction();
+    }
+    if("protanopia" == colorblind) {
+        deuteranopiaCheckBox.checked = true
+        yourFunction();
+    }
+    </script>
+
+  {% endblock %}

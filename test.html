@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCFXPHaaYSGFhhDKTxfBHXKnSXsBn3EaMU&sensor=false"></script>
+    <script>
+      // some important API constants:
+      const src1 = "https://www.google.com/maps/embed/v1/directions?origin=";
+      const src2 = "&destination=";
+      const src3 = "&key=AIzaSyCFXPHaaYSGFhhDKTxfBHXKnSXsBn3EaMU";
+      const KEY = "AIzaSyCFXPHaaYSGFhhDKTxfBHXKnSXsBn3EaMU";
+
+      async function updateGoogleMaps() {
+        origin = document.getElementById('Startdestination').value;
+        destination = document.getElementById('Enddestination').value;
+
+        // get the origin and destination place IDs from google maps API:
+        origin_coordinates = getCoordinates("New York");
+        destination_coordinates = getCoordinates("College Station, TX");
+
+        console.log("here");
+
+        // wait for promise to be fulfilled
+
+        // format google maps iframe source URL:
+        // iframe_url = src1 + origin_coordinates + src2 + destination_coordinates + src3;
+
+        // update iframe:
+        // document.getElementById('googlemaps').src = iframe_url;
+      }
+
+      //Function to covert address to Latitude and Longitude
+      var getCoordinates = async function(address) {
+        var geocoder = new google.maps.Geocoder();
+        var coordinates = undefined;
+        geocoder.geocode({'address': address}, async function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            var latitude = results[0].geometry.location.lat();
+            var longitude = results[0].geometry.location.lng();
+            coordinates = latitude + "," + longitude;
+            console.log(coordinates);
+          }
+        });
+        return coordinates;
+      }
+    </script>
+  </head>
+  <body>
+    <h3> Google Maps </h3>
+    <label>Origin:</label> <br />
+    <input id="Startdestination" placeholder="Enter a location">
+    <br>
+    <label>Destination:</label> <br />
+    <input id="Enddestination" placeholder="Enter a location">
+    <br>
+    <button onclick="updateGoogleMaps()">Go!</button>
+
+    <form method="GET" action="/">
+      <button id="signUp">Back Home</button>
+    </form>
+
+    <iframe id="googlemaps" width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?origin=place_id:ChIJ92rcyJWDRoYRotK6QCjsFf8&destination=place_id:ChIJzWpt1XSDRoYR-3Q85NFmER0&key=AIzaSyCFXPHaaYSGFhhDKTxfBHXKnSXsBn3EaMU" allowfullscreen>
+    </iframe>
+  </body>
+</html>

@@ -1,0 +1,2 @@
+web: gunicorn application:app
+wger_updater: python wger_updater.py

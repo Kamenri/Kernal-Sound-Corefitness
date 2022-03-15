@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Kernal</title>
+{% endblock %}
+
+{% block body %}
+<h5>Welcome, {{ username }}!</h5>
+<form action="{{ url_for('make_playlist') }}" method="post">
+  <input name="notused">
+  <button>Generate!</button>
+</form>
+{% endblock %}

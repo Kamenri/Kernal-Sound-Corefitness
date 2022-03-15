@@ -1,0 +1,8 @@
+SETUP:
+
+on Heroku PSQL:
+
+CREATE TABLE messages (
+  id SERIAL PRIMARY KEY,
+  message VARCHAR NOT NULL
+);
